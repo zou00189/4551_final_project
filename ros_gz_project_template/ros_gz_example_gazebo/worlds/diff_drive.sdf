@@ -20,7 +20,6 @@
       name="gz::sim::systems::UserCommands">
     </plugin>
 
-
   <gui fullscreen="0">
       <plugin filename="GzScene3D" name="3D View">
         <gz-gui>
@@ -33,10 +32,8 @@
         <ambient_light>0.4 0.4 0.4</ambient_light>
         <background_color>0.8 0.8 0.8</background_color>
         <camera_pose>-6 0 6 0 0.5 0</camera_pose>
-        <!-- <horizontal_fov>20,97</horizontal_fov> -->
       </plugin>
 
-      <!-- World control -->
       <plugin filename="WorldControl" name="World control">
         <gz-gui>
           <title>World control</title>
@@ -56,11 +53,9 @@
         <start_paused>true</start_paused>
         <use_event>false</use_event>
         <start_paused>true</start_paused>
-        <!-- <service>/world/world_demo/control</service>
-        <stats_topic>/world/world_demo/stats</stats_topic> -->
+
       </plugin>
 
-      <!-- World statistics -->
       <plugin filename="WorldStats" name="World stats">
         <gz-gui>
           <title>World stats</title>
@@ -94,9 +89,7 @@
           <property key="showTitleBar" type="bool">false</property>
         </gz-gui>
       </plugin>
-
     </gui>
-
 
     <light name="sun" type="directional">
       <cast_shadows>true</cast_shadows>
@@ -151,7 +144,7 @@
         name="gz::sim::systems::PosePublisher">
         <publish_link_pose>false</publish_link_pose> 
         <publish_model_pose>true</publish_model_pose>
-        <use_pose_vector_msg>true</use_pose_vector_msg>
+        <use_pose_vector_msg>false</use_pose_vector_msg>
         <static_publisher>false</static_publisher> 
         <update_frequency>50</update_frequency>
       </plugin>
@@ -169,7 +162,6 @@
 
     <model name='movable_long_obstacle' canonical_link='chassis'>
             <pose relative_to='world'>0 8 0 0 0 -1.5707</pose>   
-
             
             <link name='chassis'>
                 <pose relative_to='__model__'>0.5 0 0.4 0 0 0</pose>
@@ -206,7 +198,6 @@
                 </collision>
             </link>
 
-            
             <link name='left_wheel'>
                 <pose relative_to="chassis">-0.5 0.6 0 -1.5707 0 0</pose> 
                 <inertial>
@@ -242,7 +233,6 @@
                     </geometry>
                 </collision>
             </link>
-
             
             <link name='right_wheel'>
                 <pose relative_to="chassis">-0.5 -0.6 0 -1.5707 0 0</pose> 
@@ -280,11 +270,9 @@
                 </collision>
             </link>
 
-            
             <frame name="caster_frame" attached_to='chassis'>
                 <pose>0.8 0 -0.2 0 0 0</pose>
             </frame>
-
             
             <link name='caster'>
                 <pose relative_to='caster_frame'/>
@@ -320,7 +308,6 @@
                 </collision>
             </link>
 
-            
             <joint name='left_wheel_joint' type='revolute'>
                 <pose relative_to='left_wheel'/>
                 <parent>chassis</parent>
@@ -333,7 +320,6 @@
                     </limit>
                 </axis>
             </joint>
-
             
             <joint name='right_wheel_joint' type='revolute'>
                 <pose relative_to='right_wheel'/>
@@ -347,32 +333,26 @@
                     </limit>
                 </axis>
             </joint>
-            
+
             <joint name='caster_wheel' type='ball'>
                 <parent>chassis</parent>
                 <child>caster</child>
             </joint>
+
             <plugin
                 filename="gz-sim-diff-drive-system"
                 name="gz::sim::systems::DiffDrive">
-
                 <left_joint>left_wheel_joint</left_joint>
                 <right_joint>right_wheel_joint</right_joint>
                 <wheel_separation>1.2</wheel_separation>
                 <wheel_radius>0.4</wheel_radius>
-
                 <odom_publish_frequency>20</odom_publish_frequency>
                 <odom_topic>/model/movable_long_obstacle/odometry</odom_topic>
-
                 <topic>/model/movable_long_obstacle/cmd_vel</topic>
-
                 <publish_odom>true</publish_odom>
                 <publish_tf>false</publish_tf>
-
             </plugin>
-
         </model>
-
 
         <plugin filename="gz-sim-triggered-publisher-system"
                 name="gz::sim::systems::TriggeredPublisher">
@@ -383,7 +363,6 @@
                 linear: {x: 3}, angular: {z: 0.0}
             </output>
         </plugin>
-        
         
         <plugin filename="gz-sim-triggered-publisher-system"
                 name="gz::sim::systems::TriggeredPublisher">
@@ -425,7 +404,7 @@
             </output>
         </plugin>
         
-        
+
         <plugin filename="gz-sim-triggered-publisher-system"
                 name="gz::sim::systems::TriggeredPublisher">
             <input type="gz.msgs.Int32" topic="/keyboard/keypress">
@@ -456,7 +435,8 @@
             </output>
         </plugin>
 
-        <plugin filename="gz-sim-triggered-publisher-system"
+
+        <plugin filename="gz-sim-triggered-publisher-system"   
                 name="gz::sim::systems::TriggeredPublisher">
             <input type="gz.msgs.Int32" topic="/keyboard/keypress">
                 <match field="data">16777248</match>
