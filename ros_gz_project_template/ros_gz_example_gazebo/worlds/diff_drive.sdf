@@ -147,25 +147,24 @@
       </include>
 
       <plugin
-        filename="gz-sim-joint-state-publisher-system"
-        name="gz::sim::systems::JointStatePublisher">
-      </plugin>
-
-      <plugin
         filename="gz-sim-pose-publisher-system"
         name="gz::sim::systems::PosePublisher">
-        <publish_link_pose>true</publish_link_pose>
+        <publish_link_pose>false</publish_link_pose> 
+        <publish_model_pose>true</publish_model_pose>
         <use_pose_vector_msg>true</use_pose_vector_msg>
-        <static_publisher>true</static_publisher>
-        <static_update_frequency>1</static_update_frequency>
+        <static_publisher>false</static_publisher> 
+        <update_frequency>50</update_frequency>
       </plugin>
 
       <plugin
         filename="gz-sim-odometry-publisher-system"
         name="gz::sim::systems::OdometryPublisher">
-        <odom_frame>diff_drive/odom</odom_frame>
-        <robot_base_frame>diff_drive</robot_base_frame>
+        <odom_topic>/model/vehicle_blue/odometry</odom_topic>
+        <odom_frame>vehicle_blue/odom</odom_frame>
+        <robot_base_frame>vehicle_blue</robot_base_frame>
+        <odom_publish_frequency>50</odom_publish_frequency>
       </plugin>
+
     </model>
 
     <model name='movable_long_obstacle' canonical_link='chassis'>
@@ -362,14 +361,11 @@
                 <wheel_separation>1.2</wheel_separation>
                 <wheel_radius>0.4</wheel_radius>
 
-                <!-- Publish odometry -->
                 <odom_publish_frequency>20</odom_publish_frequency>
                 <odom_topic>/model/movable_long_obstacle/odometry</odom_topic>
 
-                <!-- Velocity command topic -->
                 <topic>/model/movable_long_obstacle/cmd_vel</topic>
 
-                <!-- OPTIONAL but recommended -->
                 <publish_odom>true</publish_odom>
                 <publish_tf>false</publish_tf>
 
