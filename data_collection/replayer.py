@@ -6,6 +6,7 @@
 
 # Latency problem?
 
+# worked version for velocity
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
@@ -16,7 +17,7 @@ import sys
 
 # --- Configuration ---
 EPISODE_ROOT = pathlib.Path("episodes")
-REPLAY_RATE_HZ = 20.0
+REPLAY_RATE_HZ = 10.0
 
 class VehicleReplayer(Node):
     def __init__(self):
@@ -97,7 +98,7 @@ class VehicleReplayer(Node):
             if self.index % 20 == 0:
                 ts = row['timestamp']
                 self.get_logger().info(f"Replaying time: {ts}s | vx={msg.linear.x:.3f}")
-
+           
         except ValueError as e:
             self.get_logger().warn(f"Error parsing row {self.index}: {e}")
 

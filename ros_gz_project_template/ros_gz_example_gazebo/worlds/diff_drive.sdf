@@ -146,7 +146,7 @@
         <publish_model_pose>true</publish_model_pose>
         <use_pose_vector_msg>false</use_pose_vector_msg>
         <static_publisher>false</static_publisher> 
-        <update_frequency>50</update_frequency>
+        <update_frequency>20</update_frequency>
       </plugin>
 
       <plugin
@@ -155,7 +155,7 @@
         <odom_topic>/model/vehicle_blue/odometry</odom_topic>
         <odom_frame>vehicle_blue/odom</odom_frame>
         <robot_base_frame>vehicle_blue</robot_base_frame>
-        <odom_publish_frequency>50</odom_publish_frequency>
+        <odom_publish_frequency>20</odom_publish_frequency>
       </plugin>
 
     </model>

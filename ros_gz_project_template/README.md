@@ -16,4 +16,16 @@ To place a new script under `_application`, we need to put it under `/scripts` f
 + `ros_gz_example_gazebo` :holds Gazebo specific code and configurations. Namely this is where user-defined worlds and custom system plugins end up.
 
 
-```ros2 launch ros_gz_example_bringup diff_drive.launch.py```
+```bash
+ros2 launch ros_gz_example_bringup diff_drive.launch.py
+```
+
+
+
+
+Data Collection:
+
+```bash
+gz service -s /gui/move_to/pose --reqtype gz.msgs.GUICamera --reptype gz.msgs.Boolean --timeout 2000 --req "pose: {position: {x: 0.0, y: 0.0, z: 15.0} orientation: {x: 0.0, y: 0.7071, z: 0.0, w: 0.7071}}" && python3 recorder.py
+```
+

@@ -80,7 +80,7 @@ def generate_launch_description():
 
     # Set a reasonable region to initialize the object
     x_rand = np.random.uniform(low=-8.0, high=-6.0)
-    y_rand = np.random.uniform(low=-4.0, high=4.0)
+    y_rand = np.random.uniform(low=-2, high=2)
     z_height = 0.25 
 
     spawn_box_object = ExecuteProcess(

@@ -36,3 +36,19 @@ install/
 log/
 
 *.csv
+*.pth
+*.cpython
+.pyc
+
+# Bytecode / Caching
+__pycache__/
+*.pyc
+
+# IDE/Editor Files (Optional but Recommended)
+.vscode/
+.idea/
+
+# Dataset/Log Files (Crucial for Machine Learning/Robotics)
+episodes/
+checkpoints/
+*.log

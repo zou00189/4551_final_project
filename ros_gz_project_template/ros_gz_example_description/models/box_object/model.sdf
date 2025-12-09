@@ -39,7 +39,7 @@
       
       <use_pose_vector_msg>false</use_pose_vector_msg>
       <static_publisher>false</static_publisher>
-      <update_frequency>50</update_frequency>
+      <update_frequency>20</update_frequency>
     </plugin>
   </model>
 </sdf>
