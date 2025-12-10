@@ -16,13 +16,15 @@ from nav_msgs.msg import Odometry
 from model.conditional_unet1d import ConditionalUnet1D
 from diffusers.schedulers.scheduling_ddpm import DDPMScheduler
 
+factor = 1
+
 class DiffusionInferenceNode(Node):
     def __init__(self):
         super().__init__('diffusion_inference_node')
 
         # --- 1. Settings ---
-        self.ckpt_path = "checkpoints/ckpt_epoch_151.pth" # Update this to your best epoch
-        self.control_freq = 30.0 # Hz (Matches 1/dt of your training data)
+        self.ckpt_path = "checkpoints/ckpt_epoch_601.pth" # Update this to your best epoch
+        self.control_freq = 4.0 # Hz (Matches 1/dt of your training data)
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         # self.device = torch.device('cpu')
         
@@ -213,8 +215,8 @@ class DiffusionInferenceNode(Node):
         # expects BODY frame commands, you must rotate this vector by the 
         # inverse of the robot's current yaw.
         # Assuming training data was recorded relative to robot or robot is holonomic/aligned:
-        msg.linear.x = float(vx)
-        msg.linear.y = float(vy)
+        msg.linear.x = float(vx) / factor
+        msg.linear.y = float(vy) / factor
         msg.angular.z = 0.0 
         self.get_logger().info(f"Publishing Cmd: vx={vx:.3f}, vy={vy:.3f}", throttle_duration_sec=0.5)
         self.cmd_vel_pub.publish(msg)

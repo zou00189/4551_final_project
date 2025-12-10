@@ -20,8 +20,8 @@ obs_horizon = 2
 pred_horizon = 16
 action_horizon = 8
 
-batch_size = 256
-num_epochs = 800
+batch_size = 64
+num_epochs = 801
 learning_rate = 1e-4
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

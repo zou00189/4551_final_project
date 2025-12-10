@@ -360,7 +360,7 @@
                 <match field="data">87</match>
             </input>
             <output type="gz.msgs.Twist" topic="/model/vehicle_blue/cmd_vel">
-                linear: {x: 3}, angular: {z: 0.0}
+                linear: {x: 2}, angular: {z: 0.0}
             </output>
         </plugin>
         
@@ -370,7 +370,7 @@
                 <match field="data">68</match>
             </input>
             <output type="gz.msgs.Twist" topic="/model/vehicle_blue/cmd_vel">
-                linear: {y: -3}, angular: {z: 0.0}
+                linear: {y: -2}, angular: {z: 0.0}
             </output>
         </plugin>
 
@@ -380,7 +380,7 @@
                 <match field="data">65</match>
             </input>
             <output type="gz.msgs.Twist" topic="/model/vehicle_blue/cmd_vel">
-                linear: {y: 3}, angular: {z: 0.0}
+                linear: {y: 2}, angular: {z: 0.0}
             </output>
         </plugin>
 
@@ -390,7 +390,7 @@
                 <match field="data">83</match>
             </input>
             <output type="gz.msgs.Twist" topic="/model/vehicle_blue/cmd_vel">
-                linear: {x: -3}, angular: {z: 0.0}
+                linear: {x: -2}, angular: {z: 0.0}
             </output>
         </plugin>
 

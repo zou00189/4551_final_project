@@ -15,7 +15,7 @@ import pathlib
 from datetime import datetime
 
 OUTPUT_ROOT = pathlib.Path("episodes")
-SAMPLING_RATE_HZ = 20.0
+SAMPLING_RATE_HZ = 1.0
 DURATION_SEC = 90.0
 
 class DataRecorder(Node):
