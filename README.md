@@ -34,3 +34,13 @@ Data Collection Pipeline:
 gz service -s /gui/move_to/pose --reqtype gz.msgs.GUICamera --reptype gz.msgs.Boolean --timeout 2000 --req "pose: {position: {x: 0.0, y: 0.0, z: 15.0} orientation: {x: 0.0, y: 0.7071, z: 0.0, w: 0.7071}}" && python3 recorder.py
 ```
 
+Diffusion Policy:
+
+To run the diffsion policy model, open a second terminal:
+
+```bash
+cd diffusion_policy_vel
+python3 inference.py
+```
+
+Notice. We obtained our dataset in 5Hz, with 40 episodes or so. You are also welcomed to record your own dataset by going through the data collection pipeline and re-train the model. The quality of expert demonstrations does matter. 
