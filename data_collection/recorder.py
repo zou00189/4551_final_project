@@ -3,7 +3,7 @@
 # /box/pose
 # /obstacle/odometry
 # /vehicle_blue/odometry
-# and then it should write the data into a .csv file.
+# and then it should write the data into a .a file.
 
 import rclpy
 from rclpy.node import Node
@@ -15,7 +15,7 @@ import pathlib
 from datetime import datetime
 
 OUTPUT_ROOT = pathlib.Path("episodes")
-SAMPLING_RATE_HZ = 1.0
+SAMPLING_RATE_HZ = 5.0
 DURATION_SEC = 90.0
 
 class DataRecorder(Node):
@@ -149,157 +149,3 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
-
-# import rclpy
-# from rclpy.node import Node
-# from nav_msgs.msg import Odometry
-# from geometry_msgs.msg import PoseStamped
-# import message_filters
-# import csv
-# import time
-# import pathlib
-# from datetime import datetime
-# import sys
-
-# OUTPUT_ROOT = pathlib.Path("episodes")
-# SAMPLING_RATE_HZ = 20.0
-# DURATION_SEC = 90.0
-# SYNC_SLOP = 1.0 / SAMPLING_RATE_HZ 
-
-# class DataRecorder(Node):
-#     def __init__(self):
-#         super().__init__('data_recorder')
-
-#         OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)
-#         run_ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-#         self.csv_path = OUTPUT_ROOT / f"episode_{run_ts}.csv"
-        
-#         self.csv_fields = [
-#             "timestamp",
-#             "vehicle_x", "vehicle_y", "vehicle_z", 
-#             "vehicle_qx", "vehicle_qy", "vehicle_qz", "vehicle_qw",
-#             "vehicle_vx", "vehicle_vy", "vehicle_wz",
-#             "obstacle_x", "obstacle_y", "obstacle_z",
-#             "obstacle_qx", "obstacle_qy", "obstacle_qz", "obstacle_qw",
-#             "obstacle_vx", "obstacle_vy", "obstacle_wz",
-#             "box_x", "box_y", "box_z",
-#             "box_qx", "box_qy", "box_qz", "box_qw"
-#         ]
-        
-#         self.csv_file = open(self.csv_path, "w", newline="")
-#         self.writer = csv.DictWriter(self.csv_file, fieldnames=self.csv_fields)
-#         self.writer.writeheader()
-        
-#         self.get_logger().info(f"Recording to {self.csv_path} using Time Synchronization (Slop={SYNC_SLOP:.4f}s)")
-
-#         self.veh_pose = None
-#         self.veh_odom = None
-#         self.obs_odom = None
-#         self.box_pose = None
-
-#         self.sub_veh_pose = message_filters.Subscriber(self, PoseStamped, '/vehicle_blue/pose')
-#         self.sub_veh_odom = message_filters.Subscriber(self, Odometry, '/vehicle_blue/odometry')
-#         self.sub_obs_odom = message_filters.Subscriber(self, Odometry, '/obstacle/odometry')
-#         self.sub_box_pose = message_filters.Subscriber(self, PoseStamped, '/box/pose')
-
-#         self.ts = message_filters.ApproximateTimeSynchronizer(
-#             [self.sub_veh_pose, self.sub_veh_odom, self.sub_obs_odom, self.sub_box_pose], 
-#             queue_size=20, 
-#             slop=SYNC_SLOP
-#         )
-        
-#         self.ts.registerCallback(self.sync_callback)
-
-#         self.start_time = time.time()
-#         self.record_count = 0
-
-#     def sync_callback(self, veh_pose_msg, veh_odom_msg, obs_odom_msg, box_pose_msg):
-        
-#         self.veh_pose = veh_pose_msg
-#         self.veh_odom = veh_odom_msg
-#         self.obs_odom = obs_odom_msg
-#         self.box_pose = box_pose_msg
-
-#         now = time.time()
-        
-#         if (now - self.start_time) > DURATION_SEC:
-#             self.get_logger().info("Duration limit reached. Stopping recorder.")
-#             if not self.csv_file.closed:
-#                 self.csv_file.close()
-#             self.destroy_node()
-#             sys.exit()
-
-#         missing = []
-#         if self.veh_pose is None:
-#             missing.append("/vehicle_blue/pose (PoseStamped)")
-#         if self.veh_odom is None:
-#             missing.append("/vehicle_blue/odometry (Odometry)")
-#         if self.obs_odom is None:
-#             missing.append("/obstacle/odometry (Odometry)")
-#         if self.box_pose is None:
-#             missing.append("/box/pose (PoseStamped)")
-
-#         if missing:
-#             self.get_logger().warn(f"Waiting for topics: {', '.join(missing)}", throttle_duration_sec=2.0)
-#             return
-
-#         current_time_sec = self.box_pose.header.stamp.sec + self.box_pose.header.stamp.nanosec * 1e-9
-
-#         row = {
-#             "timestamp": current_time_sec,
-            
-#             "vehicle_x": self.veh_pose.pose.position.x,
-#             "vehicle_y": self.veh_pose.pose.position.y,
-#             "vehicle_z": self.veh_pose.pose.position.z,
-#             "vehicle_qx": self.veh_pose.pose.orientation.x,
-#             "vehicle_qy": self.veh_pose.pose.orientation.y,
-#             "vehicle_qz": self.veh_pose.pose.orientation.z,
-#             "vehicle_qw": self.veh_pose.pose.orientation.w,
-#             "vehicle_vx": self.veh_odom.twist.twist.linear.x, 
-#             "vehicle_vy": self.veh_odom.twist.twist.linear.y,
-#             "vehicle_wz": self.veh_odom.twist.twist.angular.z,
-
-#             "obstacle_x": self.obs_odom.pose.pose.position.x,
-#             "obstacle_y": self.obs_odom.pose.pose.position.y,
-#             "obstacle_z": self.obs_odom.pose.pose.position.z,
-#             "obstacle_qx": self.obs_odom.pose.pose.orientation.x,
-#             "obstacle_qy": self.obs_odom.pose.pose.orientation.y,
-#             "obstacle_qz": self.obs_odom.pose.pose.orientation.z,
-#             "obstacle_qw": self.obs_odom.pose.pose.orientation.w,
-#             "obstacle_vx": self.obs_odom.twist.twist.linear.x,
-#             "obstacle_vy": self.obs_odom.twist.twist.linear.y,
-#             "obstacle_wz": self.obs_odom.twist.twist.angular.z,
-
-#             "box_x": self.box_pose.pose.position.x,
-#             "box_y": self.box_pose.pose.position.y,
-#             "box_z": self.box_pose.pose.position.z,
-#             "box_qx": self.box_pose.pose.orientation.x,
-#             "box_qy": self.box_pose.pose.orientation.y,
-#             "box_qz": self.box_pose.pose.orientation.z,
-#             "box_qw": self.box_pose.pose.orientation.w,
-#         }
-        
-#         self.writer.writerow(row)
-#         self.csv_file.flush()
-
-#     def timer_callback(self):
-        
-#         pass
-
-# def main(args=None):
-#     rclpy.init(args=args)
-#     recorder = DataRecorder()
-#     try:
-#         rclpy.spin(recorder)
-#     except SystemExit:
-#         pass
-#     except KeyboardInterrupt:
-#         pass
-#     finally:
-#         if hasattr(recorder, 'csv_file') and not recorder.csv_file.closed:
-#             recorder.csv_file.close()
-#         recorder.destroy_node()
-#         rclpy.shutdown()
-
-# if __name__ == '__main__':
-#     main()

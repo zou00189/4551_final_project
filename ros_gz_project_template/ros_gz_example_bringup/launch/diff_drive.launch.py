@@ -79,8 +79,8 @@ def generate_launch_description():
         pkg_project_description, 'models', 'box_object', 'model.sdf')
 
     # Set a reasonable region to initialize the object
-    x_rand = np.random.uniform(low=-7.0, high=-7.0)
-    y_rand = np.random.uniform(low=2, high=2)
+    x_rand = np.random.uniform(low=-6.0, high=-8.0)
+    y_rand = np.random.uniform(low=-2, high=2)
     z_height = 0.25 
 
     spawn_box_object = ExecuteProcess(

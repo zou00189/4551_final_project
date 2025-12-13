@@ -17,7 +17,7 @@ import sys
 
 # --- Configuration ---
 EPISODE_ROOT = pathlib.Path("episodes")
-REPLAY_RATE_HZ = 3.0
+REPLAY_RATE_HZ = 5.0
 
 class VehicleReplayer(Node):
     def __init__(self):
