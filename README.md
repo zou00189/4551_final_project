@@ -43,4 +43,9 @@ cd diffusion_policy_vel
 python3 inference.py
 ```
 
-Notice. We obtained our dataset in 5Hz, with 40 episodes or so. You are also welcomed to record your own dataset by going through the data collection pipeline and re-train the model. The quality of expert demonstrations does matter. 
+Notice. We obtained our dataset in 5Hz, with 40 episodes or so. You are also welcomed to record your own dataset by going through the data collection pipeline and re-train the model. The quality of expert demonstrations does matter.
+
+Model download link:
+```bash
+https://huggingface.co/hippoyu/CSCI4551_finalproject/resolve/main/ckpt_epoch_401.pth
+```
