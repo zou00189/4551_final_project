@@ -6,3 +6,7 @@ scipy
 pyyaml
 tqdm
 einops
+diffusers
+transformers
+accelerate
+safetensors
