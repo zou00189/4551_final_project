@@ -39,6 +39,9 @@ Diffusion Policy:
 To run the diffsion policy model, open a second terminal:
 
 ```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
 cd diffusion_policy_vel
 python3 inference.py
 ```
